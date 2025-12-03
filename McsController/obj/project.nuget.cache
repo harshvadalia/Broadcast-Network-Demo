@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "dgSpecHash": "84m6687VouQ=",
+  "success": true,
+  "projectFilePath": "/Users/harshvadalia/Documents/network_lab/McsController/McsController.csproj",
+  "expectedPackageFiles": [
+    "/Users/harshvadalia/.nuget/packages/microsoft.aspnetcore.app.internal.assets/10.0.0/microsoft.aspnetcore.app.internal.assets.10.0.0.nupkg.sha512",
+    "/Users/harshvadalia/.nuget/packages/prometheus-net/8.2.1/prometheus-net.8.2.1.nupkg.sha512",
+    "/Users/harshvadalia/.nuget/packages/prometheus-net.aspnetcore/8.2.1/prometheus-net.aspnetcore.8.2.1.nupkg.sha512",
+    "/Users/harshvadalia/.nuget/packages/system.text.json/10.0.0/system.text.json.10.0.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference System.Text.Json will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "/Users/harshvadalia/Documents/network_lab/McsController/McsController.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/harshvadalia/Documents/network_lab/McsController/McsController.csproj",
+      "libraryId": "System.Text.Json",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+name: mcs-demo
+
+topology:
+  nodes:
+    # 1. The Spine Switch
+    spine1:
+      kind: ceos
+      image: arista/ceos:4.35.0F # Matches the tag you loaded
+      ports:
+        - "8001:443" # Map internal HTTPS to Mac port 8001
+
+    # 2. The Leaf Switches
+    leaf1:
+      kind: ceos
+      image: arista/ceos:4.35.0F
+      ports:
+        - "8002:443" # Map internal HTTPS to Mac port 8002
+
+    leaf2:
+      kind: ceos
+      image: arista/ceos:4.35.0F
+      ports:
+        - "8003:443" # Map internal HTTPS to Mac port 8003
+
+    # 3. The Endpoints (Using Alpine Linux for ARM64 compatibility)
+    camera1:
+      kind: linux
+      image: alpine:latest
+      # Install ffmpeg on boot since typical ffmpeg images are x86
+      exec:
+        - apk add --no-cache ffmpeg
+        - sleep infinity
+
+    monitor1:
+      kind: linux
+      image: alpine:latest
+      exec:
+        - apk add --no-cache ffmpeg
+        - sleep infinity
+
+  links:
+    - endpoints: ["spine1:eth1", "leaf1:eth1"]
+    - endpoints: ["spine1:eth2", "leaf2:eth1"]
+    - endpoints: ["leaf1:eth2", "camera1:eth1"]
+    - endpoints: ["leaf2:eth2", "monitor1:eth1"]

@@ -1,0 +1,53 @@
+@page "/tester"
+@rendermode InteractiveServer
+@using McsController.Services
+@using System.Text.Json
+@inject AristaService Arista
+
+<h3>Arista Switch Checker</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <label>Switch URL:</label>
+            <input class="form-control mb-2" @bind="SwitchUrl" />
+
+            <label>Command:</label>
+            <input class="form-control mb-2" @bind="Command" placeholder="show version" />
+
+            <button class="btn btn-primary" @onclick="RunCommand">Send Command</button>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card p-3 bg-light">
+            <h5>Result:</h5>
+            <pre style="white-space: pre-wrap; font-size: 0.8em;">@ResultOutput</pre>
+        </div>
+    </div>
+</div>
+
+@code {
+    // Default to the mapped port for Spine1
+    private string SwitchUrl = "https://localhost:8001/command-api";
+    private string Command = "show version";
+    private string ResultOutput = "Ready...";
+
+    private async Task RunCommand()
+    {
+        ResultOutput = "Sending...";
+        // Call our C# Service
+        string json = await Arista.ExecuteCommandAsync(SwitchUrl, Command);
+        
+        // Pretty print the JSON
+        try 
+        {
+            var parsed = JsonDocument.Parse(json);
+            ResultOutput = JsonSerializer.Serialize(parsed, new JsonSerializerOptions { WriteIndented = true });
+        }
+        catch 
+        {
+            ResultOutput = json;
+        }
+    }
+}
